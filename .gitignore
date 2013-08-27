@@ -1,0 +1,7 @@
+Berksfile.lock 
+*~
+.*.sw[a-z]
+Gemfile.lock
+bin/*
+.bundle/*
+vendor

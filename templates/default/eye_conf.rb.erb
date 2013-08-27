@@ -1,0 +1,22 @@
+Eye.config do
+  logger "<%= @node["eye"]["log_file"] %>"
+end
+
+Eye.application "<%= @name %>" do
+  working_dir "<%= @working_dir || '/tmp' %>"
+  process "<%= @name %>" do
+    start_command "<%= @start_command %>"
+    <% if @stop_command %>
+    stop_command "<%= @stop_command %>"
+    <% end -%>
+    <% if @stop_signales %>
+    stop_signals "<%= @stop_signals %>"
+    <% end -%>
+    <% if @pid_file %>
+    pid_file "<%= @pid_file %>"
+    <% end -%>
+    uid "<%= @uid || "root" %>"
+    gid "<%= @gid || "root" %>"
+    daemonize <%= @daemonize || "false" %>
+  end
+end
