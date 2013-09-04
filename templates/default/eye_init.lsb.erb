@@ -14,22 +14,32 @@
 EYE=<%= node["eye"]["bin"] %>
 CONFIG_FILE=<%= @config_file %>
 SERVICE_NAME=<%= @service_name %>
+RUNAS=<%= @user || "root" %>
+
+execute() {
+  CMD="$EYE $1 $2"
+  if [ "$USER" = "$RUNAS" ]; then
+    exec $CMD
+  else
+    su $RUNAS -c "$CMD"
+  fi
+}
 
 case "$1" in
   start)
     echo -n "Loading eye configuration for $SERVICE_NAME"
-    $EYE load $CONFIG_FILE
-    $EYE start $SERVICE_NAME
+    execute load $CONFIG_FILE
+    execute start $SERVICE_NAME
     ;;
   stop)
-    $EYE stop $SERVICE_NAME
+    execute stop $SERVICE_NAME
     ;;
   restart)
     $0 stop
     $0 start
     ;;
   status)
-    $EYE info $SERVICE_NAME
+    execute info $SERVICE_NAME
     ;;
   *)
     echo "Usage: $0 {start|stop|restart|status}"
