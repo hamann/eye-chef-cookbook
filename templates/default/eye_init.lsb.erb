@@ -19,7 +19,7 @@ RUNAS=<%= @user || "root" %>
 execute() {
   CMD="$EYE $1 $2"
   if [ "$USER" = "$RUNAS" ]; then
-    exec $CMD
+    $CMD
   else
     su $RUNAS -c "$CMD"
   fi
