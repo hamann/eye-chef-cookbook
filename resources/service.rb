@@ -25,3 +25,6 @@ attribute :enabled, :default => false
 attribute :running, :default => false
 attribute :variables, :kind_of => Hash
 attribute :supports, :default => { :restart => true, :status => true }
+attribute :user_srv, :kind_of => [TrueClass, FalseClass], :default => false
+attribute :user_srv_uid, :kind_of => [NilClass, String], :default => nil
+attribute :user_srv_gid, :kind_of => [NilClass, String], :default => nil

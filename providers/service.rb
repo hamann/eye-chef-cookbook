@@ -31,12 +31,13 @@ action :enable do
     template "#{node['eye']['init_dir']}/eye-#{new_resource.service_name}" do
       source "eye_init.#{template_suffix}.erb"
       cookbook "eye"
-      owner "root"
-      group node['eye']['group']
+      owner service_user
+      group service_group
       mode "0755"
       variables(
                 :service_name => new_resource.service_name,
-                :config_file => config_file
+                :config_file => config_file,
+                :user => service_user
                 )
       only_if { ::File.exists?(config_file) }
     end
@@ -51,20 +52,20 @@ end
 
 action :load do
   unless @current_resource.running
-    shell_out!(load_command)
+    run_command(load_command)
     new_resource.updated_by_last_action(true)
   end
 end
 
 action :reload do
-  shell_out!(stop_command) if @current_resource.running
-  shell_out!(load_command)
+  run_command(stop_command) if @current_resource.running
+  run_command(load_command)
   new_resource.updated_by_last_action(true)
 end
 
 action :start do
   unless @current_resource.running
-    shell_out!(start_command)
+    run_command(start_command)
     new_resource.updated_by_last_action(true)
   end
 end
@@ -83,14 +84,14 @@ end
 
 action :stop do
   if @current_resource.running
-    shell_out!(stop_command)
+    run_command(stop_command)
     new_resource.updated_by_last_action(true)
   end
 end
 
 action :restart do
   if @current_resource.running
-    shell_out!(restart_command)
+    run_command(restart_command)
     new_resource.updated_by_last_action(true)
   end
 end
@@ -114,6 +115,10 @@ def load_command
   "#{node['eye']['bin']} load #{node['eye']['conf_dir']}/#{new_resource.service_name}.rb"
 end
 
+def load_master_command
+  "#{node['eye']['bin']} load"
+end
+
 def start_command
   "#{node['eye']['bin']} start #{new_resource.service_name}"
 end
@@ -126,6 +131,10 @@ def restart_command
   "#{node['eye']['bin']} restart #{new_resource.service_name}"
 end
 
+def run_command(command)
+  shell_out!(command, :user => service_user)
+end
+
 def determine_current_status!
   service_running?
   service_enabled?
@@ -133,8 +142,11 @@ end
 
 def service_running?
   begin
+    # get sure eye master process is running
+    run_command(load_master_command)
+
     # should find a better way to check if a process is up and running
-    if shell_out!(status_command).stdout.nil?
+    if run_command(status_command).stdout.chomp.empty?
       @current_resource.running false
     else
       @current_resource.running true
@@ -152,4 +164,12 @@ def service_enabled?
   else
     @current_resource.enabled false
   end
+end
+
+def service_user
+  new_resource.user_srv ? new_resource.user_srv_uid : "root"
+end
+
+def service_group
+  @new_resource.user_srv ? @new_resource.user_srv_gid : node['eye']['group']
 end

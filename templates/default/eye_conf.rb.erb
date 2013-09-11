@@ -1,5 +1,5 @@
 Eye.config do
-  logger "<%= @node["eye"]["log_file"] %>"
+  logger '<%= @log_file %>'
 end
 
 Eye.application "<%= @name %>" do
@@ -15,8 +15,12 @@ Eye.application "<%= @name %>" do
     <% if @pid_file %>
     pid_file "<%= @pid_file %>"
     <% end -%>
-    uid "<%= @uid || "root" %>"
-    gid "<%= @gid || "root" %>"
+    <% if @uid %>
+    uid "<%= @uid %>"
+    <% end -%>
+    <% if @gid %>
+    gid "<%= @gid %>"
+    <% end -%>
     daemonize <%= @daemonize || "false" %>
   end
 end
