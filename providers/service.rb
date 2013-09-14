@@ -119,6 +119,10 @@ def load_master_command
   "#{node['eye']['bin']} load"
 end
 
+def load_global_config
+  "#{node['eye']['bin']} load #{node['eye']['conf_dir']}
+end
+
 def start_command
   "#{node['eye']['bin']} start #{new_resource.service_name}"
 end
@@ -167,7 +171,7 @@ def service_enabled?
 end
 
 def service_user
-  new_resource.user_srv ? new_resource.user_srv_uid : "root"
+  new_resource.user_srv ? new_resource.user_srv_uid : node['eye']['user']
 end
 
 def service_group

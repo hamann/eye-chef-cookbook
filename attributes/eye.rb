@@ -22,6 +22,8 @@ default["eye"]["bin"] = node["languages"]["ruby"]["bin_dir"] + "/eye"
 default["eye"]["log_dir"] = "/var/log/eye"
 default["eye"]["run_dir"] = "/var/run/eye"
 default["eye"]["use_rsyslog"] = false
+default["eye"]["user"] = "root"
+default["eye"]["group"] = "group"
 
 case platform
 when "arch"

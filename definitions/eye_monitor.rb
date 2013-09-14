@@ -1,7 +1,7 @@
 define :eye_monitor do
   include_recipe "eye::default"
   
-  service_user = params[:user_srv_uid] || "root"
+  service_user = params[:user_srv_uid] || node['eye']['user']
   service_group = params[:user_srv_gid] || node['eye']['group']
   
   log_file = params[:log_file] || ::File.join(node['eye']['log_dir'], "eye.log")

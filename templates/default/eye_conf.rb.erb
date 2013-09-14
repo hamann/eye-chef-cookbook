@@ -1,7 +1,3 @@
-Eye.config do
-  logger '<%= @log_file %>'
-end
-
 Eye.application "<%= @name %>" do
   working_dir "<%= @working_dir || '/tmp' %>"
   process "<%= @name %>" do
