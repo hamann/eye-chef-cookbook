@@ -3,3 +3,7 @@
 bin/*
 .bundle/*
 vendor
+.#*
+\#*#
+.cache
+.kitchen
