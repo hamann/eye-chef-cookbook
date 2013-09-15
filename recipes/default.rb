@@ -15,7 +15,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-# 
+
+gem_package "bundler"
 
 directory node['eye']['install_dir'] do
   owner node['eye']['user']
@@ -33,7 +34,7 @@ template "#{node['eye']['install_dir']}/Gemfile" do
 end
 
 execute 'bundle_eye' do
-  command "bundle install --path vendor/bundle --binstubs --quiet"
+  command "#{node['languages']['ruby']['bin_dir']}/bundle install --path vendor/bundle --binstubs --quiet"
   cwd node['eye']['install_dir']
   user node['eye']['user']
   action :run
