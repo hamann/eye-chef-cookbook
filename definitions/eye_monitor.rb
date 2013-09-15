@@ -4,8 +4,6 @@ define :eye_monitor do
   service_user = params[:user_srv_uid] || node['eye']['user']
   service_group = params[:user_srv_gid] || node['eye']['group']
   
-  log_file = params[:log_file] || ::File.join(node['eye']['log_dir'], "eye.log")
-
   eye_service params[:name] do
     supports [:start, :stop, :restart, :enable, :load, :reload]
     user_srv params[:user_srv]
@@ -14,12 +12,35 @@ define :eye_monitor do
     action :nothing
   end
 
-  template "#{node["eye"]["conf_dir"]}/#{params[:name]}.rb" do
+  directory "#{node["eye"]["conf_dir"]}/#{service_user}" do
+    owner service_user
+    group node['eye']['group']
+    action :create
+  end
+
+  log_dir = "#{node["eye"]["log_dir"]}/#{service_user}"
+  directory log_dir do
+    owner service_user
+    group node['eye']['group']
+    action :create
+  end
+
+  template "#{node["eye"]["conf_dir"]}/#{service_user}/config.rb" do
+    owner service_user
+    group node['eye']['group']
+    source "config.rb.erb"
+    variables :log_file => "#{log_dir}/eye.log"
+    cookbook 'eye'
+    action :create
+  end
+
+
+  template "#{node["eye"]["conf_dir"]}/#{service_user}/#{params[:name]}.rb" do
     owner service_user
     group service_group
     mode 0600
     cookbook params[:cookbook] || "eye"
-    variables (params[:variables] || params).merge(:log_file => log_file)
+    variables params[:variables] || params
     source params[:template] || "eye_conf.rb.erb"
     notifies :enable, resources(:eye_service => params[:name]), :immediately
     notifies :reload, resources(:eye_service => params[:name]), :immediately

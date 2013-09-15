@@ -9,13 +9,6 @@
 
 include_recipe "eye::default"
 
-directory "/var/log/eye/vagrant" do
-  owner "hamann"
-  group "users"
-  mode 0775
-  action :create
-end
-
 eye_monitor "sleep" do
   start_command "/bin/sleep 10000"
   stop_signals "[:term, 10.seconds, :kill]"
@@ -24,6 +17,5 @@ eye_monitor "sleep" do
   user_srv true
   user_srv_uid "vagrant"
   user_srv_gid "users"
-  log_file "/var/log/eye/hamann/sleep.log"
   daemonize true
 end

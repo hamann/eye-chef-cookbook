@@ -21,8 +21,9 @@ require 'chef/mixin/language'
 include Chef::Mixin::ShellOut
 
 action :enable do
-  config_file = ::File.join(node['eye']['conf_dir'],
+  config_file = ::File.join(user_conf_dir,
                             "#{new_resource.service_name}.rb")
+
   unless @current_resource.enabled
     template_suffix = case node['platform_family']
                       when 'implement_me' then node['platform_family']
@@ -72,7 +73,7 @@ end
 
 action :disable do
   if @current_resource.enabled
-    file "#{node['eye']['conf_dir']}/#{new_resource.service_name}.pill" do
+    file "#{user_conf_dir}/#{new_resource.service_name}.rb" do
       action :delete
     end
     link "#{node['eye']['init_dir']}/#{new_resource.service_name}" do
@@ -112,15 +113,11 @@ def status_command
 end
 
 def load_command
-  "#{node['eye']['bin']} load #{node['eye']['conf_dir']}/#{new_resource.service_name}.rb"
+  "#{node['eye']['bin']} load #{user_conf_dir}/#{new_resource.service_name}.rb"
 end
 
-def load_master_command
-  "#{node['eye']['bin']} load"
-end
-
-def load_global_config
-  "#{node['eye']['bin']} load #{node['eye']['conf_dir']}
+def load_eye_config
+  "#{node['eye']['bin']} load #{user_conf_dir}/config.rb"
 end
 
 def start_command
@@ -147,7 +144,7 @@ end
 def service_running?
   begin
     # get sure eye master process is running
-    run_command(load_master_command)
+    run_command(load_eye_config)
 
     # should find a better way to check if a process is up and running
     if run_command(status_command).stdout.chomp.empty?
@@ -162,7 +159,7 @@ def service_running?
 end
 
 def service_enabled?
-  if ::File.exists?("#{node['eye']['conf_dir']}/#{new_resource.service_name}.rb") &&
+  if ::File.exists?("#{user_conf_dir}/#{new_resource.service_name}.rb") &&
       ::File.exists?("#{node['eye']['init_dir']}/eye-#{new_resource.service_name}")
     @current_resource.enabled true
   else
@@ -175,5 +172,13 @@ def service_user
 end
 
 def service_group
-  @new_resource.user_srv ? @new_resource.user_srv_gid : node['eye']['group']
+  new_resource.user_srv ? new_resource.user_srv_gid : node['eye']['group']
+end
+
+def user_conf_dir
+  ::File.join(node['eye']['conf_dir'], service_user)
+end
+
+def user_log_dir
+  ::File.join(node['eye']['log_dir'], service_user)
 end

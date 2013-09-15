@@ -48,13 +48,5 @@ end
   end
 end
 
-eye_conf = ::File.join(node['eye']['conf_dir'], 'config.rb')
-template eye_conf do
-  owner node['eye']['user']
-  group node['eye']['group']
-  source "config.rb.erb"
-  variables :log_file => ::File.join(node['eye']['log_dir'], 'eye.log')
-end
-
 include_recipe "eye::rsyslog" if node["eye"]["use_rsyslog"]
 
