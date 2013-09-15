@@ -7,7 +7,9 @@
 # All rights reserved - Do Not Redistribute
 #
 
-directory "/var/log/eye/hamann" do
+include_recipe "eye::default"
+
+directory "/var/log/eye/vagrant" do
   owner "hamann"
   group "users"
   mode 0775
@@ -20,7 +22,7 @@ eye_monitor "sleep" do
   stop_grace "20.seconds"
   pid_file "/var/tmp/sleep.pid"
   user_srv true
-  user_srv_uid "hamann"
+  user_srv_uid "vagrant"
   user_srv_gid "users"
   log_file "/var/log/eye/hamann/sleep.log"
   daemonize true
