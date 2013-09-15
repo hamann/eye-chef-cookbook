@@ -54,6 +54,3 @@ end
     mode 0755
   end
 end
-
-include_recipe 'eye::rsyslog' if node['eye']['use_rsyslog']
-

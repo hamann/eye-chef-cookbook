@@ -3,9 +3,6 @@
     "eye": {
       "path": "."
     },
-    "rsyslog": {
-      "locked_version": "1.8.0"
-    },
     "eye_test": {
       "path": "./test/cookbooks/eye_test"
     }
