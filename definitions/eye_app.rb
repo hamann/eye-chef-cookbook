@@ -1,4 +1,4 @@
-define :eye_monitor do
+define :eye_app do
   include_recipe "eye::default"
   
   service_user = params[:user_srv_uid] || node['eye']['user']
@@ -33,13 +33,14 @@ define :eye_monitor do
     variables :log_file => "#{log_dir}/eye.log"
     cookbook 'eye'
     action :create
+    mode 0640
   end
 
 
   template "#{node["eye"]["conf_dir"]}/#{service_user}/#{params[:name]}.rb" do
     owner service_user
     group service_group
-    mode 0600
+    mode 0640
     cookbook params[:cookbook] || "eye"
     variables params[:variables] || params
     source params[:template] || "eye_conf.rb.erb"

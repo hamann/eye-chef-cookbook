@@ -9,7 +9,7 @@
 
 include_recipe "eye::default"
 
-eye_monitor "sleep_vagrant" do
+eye_app "sleep_vagrant" do
   start_command "/bin/sleep 10000"
   stop_signals "[:term, 10.seconds, :kill]"
   stop_grace "20.seconds"
@@ -20,7 +20,7 @@ eye_monitor "sleep_vagrant" do
   daemonize true
 end
 
-eye_monitor "sleep_root" do
+eye_app "sleep_root" do
   start_command "/bin/sleep 10000"
   stop_signals "[:term, 10.seconds, :kill]"
   stop_grace "20.seconds"
