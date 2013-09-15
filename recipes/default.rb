@@ -51,6 +51,7 @@ end
     owner node['eye']['user']
     group node['eye']['group']
     recursive true
+    mode 0755
   end
 end
 

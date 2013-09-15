@@ -17,6 +17,7 @@ define :eye_app do
     owner service_user
     group node['eye']['group']
     action :create
+    mode 0750
   end
 
   log_dir = "#{node["eye"]["log_dir"]}/#{service_user}"
@@ -24,6 +25,7 @@ define :eye_app do
     owner service_user
     group node['eye']['group']
     action :create
+    mode 0750
   end
 
   template "#{node["eye"]["conf_dir"]}/#{service_user}/config.rb" do
