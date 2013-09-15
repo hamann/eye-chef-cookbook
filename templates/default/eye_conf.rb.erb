@@ -11,11 +11,11 @@ Eye.application "<%= @name %>" do
     <% if @pid_file %>
     pid_file "<%= @pid_file %>"
     <% end -%>
-    <% if @uid %>
-    uid "<%= @uid %>"
+    <% if @user_srv_uid %>
+    uid "<%= @user_srv_uid %>"
     <% end -%>
-    <% if @gid %>
-    gid "<%= @gid %>"
+    <% if @user_srv_gid %>
+    gid "<%= @user_srv_gid %>"
     <% end -%>
     daemonize <%= @daemonize || "false" %>
   end
