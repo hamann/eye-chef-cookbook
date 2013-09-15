@@ -35,8 +35,7 @@ case "$1" in
     execute stop $SERVICE_NAME
     ;;
   restart)
-    $0 stop
-    $0 start
+    execute restart $SERVICE_NAME
     ;;
   status)
     execute info $SERVICE_NAME

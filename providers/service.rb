@@ -36,14 +36,14 @@ action :enable do
       group service_group
       mode "0755"
       variables(
-                :service_name => new_resource.service_name,
+                :service_name => "eye-#{new_resource.service_name}",
                 :config_file => config_file,
                 :user => service_user
                 )
       only_if { ::File.exists?(config_file) }
     end
 
-    service "eye-#{new_resource.service_name}" do
+    service "#{new_resource.service_name}" do
       action [ :enable ]
     end
 
