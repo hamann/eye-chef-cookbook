@@ -23,7 +23,7 @@ default["eye"]["log_dir"] = "/var/log/eye"
 default["eye"]["run_dir"] = "/var/run/eye"
 default["eye"]["use_rsyslog"] = false
 default["eye"]["user"] = "root"
-default["eye"]["group"] = "group"
+default["eye"]["group"] = "root"
 
 case platform
 when "arch"
