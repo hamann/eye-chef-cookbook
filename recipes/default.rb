@@ -17,9 +17,26 @@
 # limitations under the License.
 # 
 
-gem_package "eye" do
-  version node["eye"]["version"] if node["eye"]["version"]
-  action :install
+directory node['eye']['install_dir'] do
+  owner node['eye']['user']
+  group node['eye']['group']
+  mode 0755
+  action :create
+end
+
+template "#{node['eye']['install_dir']}/Gemfile" do
+  source "Gemfile.erb"
+  owner node['eye']['user']
+  group node['eye']['group']
+  variables :version => node['eye']['version']
+  action :create
+end
+
+execute 'bundle_eye' do
+  command "bundle install --path vendor/bundle --binstubs --quiet"
+  cwd node['eye']['install_dir']
+  user node['eye']['user']
+  action :run
 end
 
 %w(conf_dir run_dir log_dir).each do |dir|

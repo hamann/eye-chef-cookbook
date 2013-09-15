@@ -17,8 +17,10 @@
 # limitations under the License.
 #
 
+default["eye"]["version"] = "0.4.1"
+default["eye"]["install_dir"] = "/opt/eye"
 default["eye"]["conf_dir"] = "/etc/eye"
-default["eye"]["bin"] = node["languages"]["ruby"]["bin_dir"] + "/eye"
+default["eye"]["bin"] = "#{node["eye"]["install_dir"]}/bin/eye"
 default["eye"]["log_dir"] = "/var/log/eye"
 default["eye"]["run_dir"] = "/var/run/eye"
 default["eye"]["use_rsyslog"] = false
