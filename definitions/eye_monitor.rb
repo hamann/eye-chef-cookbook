@@ -9,6 +9,7 @@ define :eye_monitor do
     user_srv params[:user_srv]
     user_srv_uid service_user
     user_srv_gid service_group
+    init_script_prefix params[:init_script_prefix] || 'eye-'
     action :nothing
   end
 

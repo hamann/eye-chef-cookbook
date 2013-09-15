@@ -28,3 +28,4 @@ attribute :supports, :default => { :restart => true, :status => true }
 attribute :user_srv, :kind_of => [TrueClass, FalseClass], :default => false
 attribute :user_srv_uid, :kind_of => [NilClass, String], :default => nil
 attribute :user_srv_gid, :kind_of => [NilClass, String], :default => nil
+attribute :init_script_prefix, :kind_of => String, :default => 'eye-'
