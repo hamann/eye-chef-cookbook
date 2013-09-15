@@ -116,8 +116,8 @@ def load_command
   "#{node['eye']['bin']} load #{user_conf_dir}/#{new_resource.service_name}.rb"
 end
 
-def load_eye_config
-  "#{node['eye']['bin']} load #{user_conf_dir}/config.rb"
+def load_eye
+  "#{node['eye']['bin']} load"
 end
 
 def start_command
@@ -144,7 +144,7 @@ end
 def service_running?
   begin
     # get sure eye master process is running
-    run_command(load_eye_config)
+    run_command(load_eye)
 
     # should find a better way to check if a process is up and running
     if run_command(status_command).stdout.chomp.empty?
