@@ -40,13 +40,19 @@ execute 'bundle_eye' do
   action :run
 end
 
+if node['eye']['bin_link_dir']
+  link "#{node['eye']['bin_link_dir']}/eye" do
+    to node['eye']['bin']
+  end
+end
+
 %w(conf_dir run_dir log_dir).each do |dir|
-  directory "#{node["eye"][dir]}" do
+  directory "#{node['eye'][dir]}" do
     owner node['eye']['user']
     group node['eye']['group']
     recursive true
   end
 end
 
-include_recipe "eye::rsyslog" if node["eye"]["use_rsyslog"]
+include_recipe 'eye::rsyslog' if node['eye']['use_rsyslog']
 
