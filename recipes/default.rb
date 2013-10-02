@@ -25,19 +25,20 @@ directory node['eye']['install_dir'] do
   action :create
 end
 
+execute 'bundle_eye' do
+  command "#{node['languages']['ruby']['bin_dir']}/bundle install --path vendor/bundle --binstubs --quiet"
+  cwd node['eye']['install_dir']
+  user node['eye']['user']
+  action :nothing
+end
+
 template "#{node['eye']['install_dir']}/Gemfile" do
   source "Gemfile.erb"
   owner node['eye']['user']
   group node['eye']['group']
   variables :version => node['eye']['version']
   action :create
-end
-
-execute 'bundle_eye' do
-  command "#{node['languages']['ruby']['bin_dir']}/bundle install --path vendor/bundle --binstubs --quiet"
-  cwd node['eye']['install_dir']
-  user node['eye']['user']
-  action :run
+  notifies :run, resources(:execute => "bundle_eye")
 end
 
 if node['eye']['bin_link_dir']
