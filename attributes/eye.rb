@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-default['eye']['version'] = '0.4.1'
+default['eye']['version'] = '0.4.2'
 default['eye']['install_dir'] = '/opt/eye'
 default['eye']['conf_dir'] = '/etc/eye'
 default['eye']['bin'] = "#{node['eye']['install_dir']}/bin/eye"

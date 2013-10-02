@@ -10,7 +10,7 @@ eye is written in Ruby, so it should work on any system. If you want to use eye'
 
 Attributes
 ----------
-* `node['eye']['version']` - Version of eye, default is '0.4.1'
+* `node['eye']['version']` - Version of eye, default is '0.4.2'
 * `node['eye']['install_dir']` - Location of eye, will be installed by `bundler`, default "/opt/eye"
 * `node['eye']['conf_dir']` - Location of eye's configuration files, default '/etc/eye'
 * `node['eye']['bin']` - Location of eye binary, default '/opt/eye/bin/eye'
