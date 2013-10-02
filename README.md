@@ -22,15 +22,15 @@ Attributes
 
 Resources/Providers
 -------------------
-This coookbook contains a LWRPs, eye_service.
+This cookbook contains a LWRPs, eye_service.
 
 	eye_service 'my_service' do
  		action [:enable, :reload, :restart]
 	end
 
-This loads eye with a needed configuration 'my_service.rb' in a subdirectory of `node['eye']['conf_dir']` named by the default eye owner (e.g /etc/eye/root/my_service.rb) and starts it.
+This loads eye daemon with a needed configuration 'my_service.rb' in a subdirectory of `node['eye']['conf_dir']` named by the default eye owner (e.g /etc/eye/root/my_service.rb) and starts the according process. The owner of eye daemon and the process itself is the user defined with `node['eye']['user']`
 
-The eye process can also be controlled by a different owner (with it's own logfile, e.g in '/var/log/eye/deploy/eye.log')
+An (additional) eye daemon can also be started by a different owner (with it's own logfile, e.g in '/var/log/eye/deploy/eye.log')
 
 	eye_service 'my_service' do
 		user_srv true
@@ -41,11 +41,67 @@ The eye process can also be controlled by a different owner (with it's own logfi
 
 In that case the configuration file should be in '/etc/eye/deploy/my_service.rb'
 
+If eye daemon should by controlled by `node['eye']['user']`, but the process should be started as different user, use eye's `uid` or `gid` configuration features.
+
+`eye_service` creates an init script, e.g. '/etc/init.d/eye-my_service'. This init script can be prefixed, like
+
+	eye_service 'my_service' do
+		init_script_prefix 'eye-'
+		...
+	end
+
+
+There's also a definition `eye_app` which creates the necessary configuration files, log directories and calls `eye_service` afterwards.
+
+Example for unicorn:
+	
+	eye_app "test_unicorn" do
+  		user_srv true
+  		user_srv_uid "deploy"
+  		user_srv_gid "deploy"
+  		template "rails_unicorn.conf.erb"
+  		cookbook "rails_app"
+  		variables :ruby => "#{node['languages']['ruby']['bin_dir']}/ruby",
+    	:environment => 'test',
+    	:working_dir => '/var/www/rails_dir'
+	end
+	
+with according template:
+
+```
+Eye.application "test_unicorn" do
+  env "RAILS_ENV" => '<%= @environment %>'
+  env "PATH" => "#{File.dirname("<%= @ruby %>")}:#{ENV['PATH']}"
+
+  working_dir "<%= @working_dir %>"
+
+  process("unicorn") do
+    pid_file "tmp/pids/unicorn.pid"
+    start_command "<%= @ruby %> ./bin/unicorn -Dc ./config/unicorn.rb -E <%= @environment %>"
+    stdall "log/unicorn.log"
+
+    stop_signals [:TERM, 10.seconds]
+
+    restart_command "kill -USR2 {PID}"
+
+    check :cpu, :every => 30, :below => 80, :times => 3
+    check :memory, :every => 30, :below => 150.megabytes, :times => [3,5]
+
+    start_timeout 30.seconds
+    restart_grace 30.seconds
+
+    monitor_children do
+      stop_command "kill -QUIT {PID}"
+      check :cpu, :every => 30, :below => 80, :times => 3
+      check :memory, :every => 30, :below => 150.megabytes, :times => [3,5]
+    end
+  end
+
+end
+```
 
 Usage
 -----
-#### eye::default
-TODO: Write usage instructions for each cookbook.
 
 e.g.
 Just include `eye` in your node's `run_list`:
@@ -61,9 +117,7 @@ Just include `eye` in your node's `run_list`:
 
 Contributing
 ------------
-TODO: (optional) If this is a public cookbook, detail the process for contributing. If this is a private cookbook, remove this section.
 
-e.g.
 1. Fork the repository on Github
 2. Create a named feature branch (like `add_component_x`)
 3. Write you change
@@ -73,4 +127,4 @@ e.g.
 
 License and Authors
 -------------------
-Authors: TODO: List authors
+Authors: Holger Amann <holger@fehu.org>
