@@ -22,7 +22,7 @@ include Chef::Mixin::ShellOut
 
 action :enable do
   config_file = ::File.join(user_conf_dir,
-                            "#{new_resource.service_name}.rb")
+                            "#{new_resource.service_name}.eye")
 
   unless @current_resource.enabled
     template_suffix = case node['platform_family']
@@ -73,7 +73,7 @@ end
 
 action :disable do
   if @current_resource.enabled
-    file "#{user_conf_dir}/#{new_resource.service_name}.rb" do
+    file "#{user_conf_dir}/#{new_resource.service_name}.eye" do
       action :delete
     end
     link "#{node['eye']['init_dir']}/#{new_resource.service_name}" do
@@ -113,7 +113,7 @@ def status_command
 end
 
 def load_command
-  "#{node['eye']['bin']} load #{user_conf_dir}/#{new_resource.service_name}.rb"
+  "#{node['eye']['bin']} load #{user_conf_dir}/#{new_resource.service_name}.eye"
 end
 
 def load_eye
@@ -159,7 +159,7 @@ def service_running?
 end
 
 def service_enabled?
-  if ::File.exists?("#{user_conf_dir}/#{new_resource.service_name}.rb") &&
+  if ::File.exists?("#{user_conf_dir}/#{new_resource.service_name}.eye") &&
       ::File.exists?("#{node['eye']['init_dir']}/eye-#{new_resource.service_name}")
     @current_resource.enabled true
   else

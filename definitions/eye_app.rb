@@ -28,10 +28,10 @@ define :eye_app do
     mode 0750
   end
 
-  template "#{node["eye"]["conf_dir"]}/#{service_user}/config.rb" do
+  template "#{node["eye"]["conf_dir"]}/#{service_user}/config.eye" do
     owner service_user
     group node['eye']['group']
-    source "config.rb.erb"
+    source "config.eye.erb"
     variables :log_file => "#{log_dir}/eye.log"
     cookbook 'eye'
     action :create
@@ -39,13 +39,13 @@ define :eye_app do
   end
 
 
-  template "#{node["eye"]["conf_dir"]}/#{service_user}/#{params[:name]}.rb" do
+  template "#{node["eye"]["conf_dir"]}/#{service_user}/#{params[:name]}.eye" do
     owner service_user
     group service_group
     mode 0640
     cookbook params[:cookbook] || "eye"
     variables params[:variables] || params
-    source params[:template] || "eye_conf.rb.erb"
+    source params[:template] || "eye_conf.eye.erb"
     notifies :enable, resources(:eye_service => params[:name]), :immediately
     notifies :reload, resources(:eye_service => params[:name]), :immediately
     notifies :restart, resources(:eye_service => params[:name]), :immediately

@@ -28,7 +28,7 @@ This cookbook contains a LWRPs, eye_service.
  		action [:enable, :reload, :restart]
 	end
 
-This loads eye daemon with a needed configuration 'my_service.rb' in a subdirectory of `node['eye']['conf_dir']` named by the default eye owner (e.g /etc/eye/root/my_service.rb) and starts the according process. The owner of eye daemon and the process itself is the user defined with `node['eye']['user']`
+This loads eye daemon with a needed configuration 'my_service.eye' in a subdirectory of `node['eye']['conf_dir']` named by the default eye owner (e.g /etc/eye/root/my_service.rb) and starts the according process. The owner of eye daemon and the process itself is the user defined with `node['eye']['user']`
 
 An (additional) eye daemon can also be started by a different owner (with it's own logfile, e.g in '/var/log/eye/deploy/eye.log')
 
@@ -39,7 +39,7 @@ An (additional) eye daemon can also be started by a different owner (with it's o
  		action [:enable, :reload, :restart]
 	end
 
-In that case the configuration file should be in '/etc/eye/deploy/my_service.rb'
+In that case the configuration file should be in '/etc/eye/deploy/my_service.eye'
 
 If eye daemon should by controlled by `node['eye']['user']`, but the process should be started as different user, use eye's `uid` or `gid` configuration features.
 
