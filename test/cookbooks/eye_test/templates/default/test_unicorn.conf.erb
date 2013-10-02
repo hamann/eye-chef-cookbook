@@ -1,0 +1,29 @@
+Eye.application "test_unicorn" do
+  env "RAILS_ENV" => '<%= @environment %>'
+  env "PATH" => "#{File.dirname("<%= @ruby %>")}:#{ENV['PATH']}"
+
+  working_dir "<%= @working_dir %>"
+
+  process("unicorn") do
+    pid_file "tmp/pids/unicorn.pid"
+    start_command "<%= @ruby %> ./bin/unicorn -Dc ./config/unicorn.rb -E <%= @environment %>"
+    stdall "log/unicorn.log"
+
+    stop_signals [:TERM, 10.seconds]
+
+    restart_command "kill -USR2 {PID}"
+
+    check :cpu, :every => 30, :below => 80, :times => 3
+    check :memory, :every => 30, :below => 150.megabytes, :times => [3,5]
+
+    start_timeout 30.seconds
+    restart_grace 30.seconds
+
+    monitor_children do
+      stop_command "kill -QUIT {PID}"
+      check :cpu, :every => 30, :below => 80, :times => 3
+      check :memory, :every => 30, :below => 150.megabytes, :times => [3,5]
+    end
+  end
+
+end
