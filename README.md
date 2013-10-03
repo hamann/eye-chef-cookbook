@@ -43,7 +43,7 @@ In that case the configuration file should be in '/etc/eye/deploy/my_service.eye
 
 If eye daemon should by controlled by `node['eye']['user']`, but the process should be started as different user, use eye's `uid` or `gid` configuration features.
 
-`eye_service` creates an init script, e.g. '/etc/init.d/eye-my_service'. This init script can be prefixed, like
+`eye_service` creates an init script, e.g. '/etc/init.d/my_service'. This init script can be prefixed, like
 
 	eye_service 'my_service' do
 		init_script_prefix 'eye-'
@@ -62,8 +62,8 @@ Example for unicorn:
   		template "rails_unicorn.conf.erb"
   		cookbook "rails_app"
   		variables :ruby => "#{node['languages']['ruby']['bin_dir']}/ruby",
-    	:environment => 'test',
-    	:working_dir => '/var/www/rails_dir'
+    	          :environment => 'test',
+    	          :working_dir => '/var/www/rails_dir'
 	end
 	
 with according template:
