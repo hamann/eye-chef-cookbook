@@ -28,10 +28,10 @@ define :eye_app do
     mode 0750
   end
 
-  template "#{node["eye"]["conf_dir"]}/#{service_user}/config.eye" do
+  template "#{node["eye"]["conf_dir"]}/#{service_user}/config.rb" do
     owner service_user
     group node['eye']['group']
-    source "config.eye.erb"
+    source "config.rb.erb"
     variables :log_file => "#{log_dir}/eye.log"
     cookbook 'eye'
     action :create
