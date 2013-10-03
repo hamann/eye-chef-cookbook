@@ -38,7 +38,7 @@ template "#{node['eye']['install_dir']}/Gemfile" do
   group node['eye']['group']
   variables :version => node['eye']['version']
   action :create
-  notifies :run, resources(:execute => "bundle_eye")
+  notifies :run, resources(:execute => "bundle_eye"), :immediately
 end
 
 if node['eye']['bin_link_dir']
