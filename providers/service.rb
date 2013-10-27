@@ -133,7 +133,9 @@ def restart_command
 end
 
 def run_command(command)
-  shell_out!(command, :user => service_user)
+  # if user isn't root, eye daemon places socket and pid in ~/.eye/sock 
+  env_variables = { 'HOME' => node['etc']['passwd'][service_user]['dir'] }
+  shell_out!(command, :user => service_user, :env => env_variables)
 end
 
 def determine_current_status!
@@ -160,7 +162,7 @@ end
 
 def service_enabled?
   if ::File.exists?("#{user_conf_dir}/#{new_resource.service_name}.eye") &&
-      ::File.exists?("#{node['eye']['init_dir']}/eye-#{new_resource.service_name}")
+      ::File.exists?("#{node['eye']['init_dir']}/#{new_resource.init_script_prefix}#{new_resource.service_name}")
     @current_resource.enabled true
   else
     @current_resource.enabled false
