@@ -26,7 +26,7 @@ directory node['eye']['install_dir'] do
 end
 
 execute 'bundle_eye' do
-  command "#{node['languages']['ruby']['bin_dir']}/bundle install --path vendor/bundle --binstubs --quiet"
+  command "#{node['languages']['ruby']['bin_dir']}/bundle install --binstubs --quiet"
   cwd node['eye']['install_dir']
   user node['eye']['user']
   action :nothing
