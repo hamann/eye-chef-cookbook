@@ -149,7 +149,7 @@ def service_running?
     run_command(load_eye)
 
     # should find a better way to check if a process is up and running
-    if run_command(status_command).stdout.chomp.empty?
+    if run_command(status_command).stdout.strip.empty?
       @current_resource.running false
     else
       @current_resource.running true
