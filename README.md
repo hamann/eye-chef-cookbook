@@ -11,14 +11,12 @@ eye is written in Ruby, so it should work on any system. If you want to use eye'
 Attributes
 ----------
 * `node['eye']['version']` - Version of eye, default is '0.4.2'
-* `node['eye']['install_dir']` - Location of eye, will be installed by `bundler`, default "/opt/eye"
 * `node['eye']['conf_dir']` - Location of eye's configuration files, default '/etc/eye'
-* `node['eye']['bin']` - Location of eye binary, default '/opt/eye/bin/eye'
+* `node['eye']['bin']` - Location of eye binary, default "node['languages']['ruby']['bin_dir']/eye"
 * `node['eye']['log_dir']` - Location of eye's logfiles, default '/var/log/eye'
 * `node['eye']['run_dir']` - Path of state directory, default '/var/run/eye'
 * `node['eye']['user']` - Owner of eye process, directories and configuration files, default 'root'
 * `node['eye']['group']` - Group of eye process, directories and configuration files, default 'root'
-* `node['eye']['bin_link_dir']` - if set, eye binary will be linked to specified location, default '/usr/local/bin'
 
 Resources/Providers
 -------------------

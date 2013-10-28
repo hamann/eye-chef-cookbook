@@ -18,33 +18,8 @@
 
 gem_package "bundler"
 
-directory node['eye']['install_dir'] do
-  owner node['eye']['user']
-  group node['eye']['group']
-  mode 0755
-  action :create
-end
-
-execute 'bundle_eye' do
-  command "#{node['languages']['ruby']['bin_dir']}/bundle install --binstubs --quiet"
-  cwd node['eye']['install_dir']
-  user node['eye']['user']
-  action :nothing
-end
-
-template "#{node['eye']['install_dir']}/Gemfile" do
-  source "Gemfile.erb"
-  owner node['eye']['user']
-  group node['eye']['group']
-  variables :version => node['eye']['version']
-  action :create
-  notifies :run, resources(:execute => "bundle_eye"), :immediately
-end
-
-if node['eye']['bin_link_dir']
-  link "#{node['eye']['bin_link_dir']}/eye" do
-    to node['eye']['bin']
-  end
+gem_package "eye" do
+  version node['eye']['version']
 end
 
 %w(conf_dir run_dir log_dir).each do |dir|

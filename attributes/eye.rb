@@ -18,14 +18,12 @@
 #
 
 default['eye']['version'] = '0.5.0'
-default['eye']['install_dir'] = '/opt/eye'
 default['eye']['conf_dir'] = '/etc/eye'
-default['eye']['bin'] = "#{node['eye']['install_dir']}/bin/eye"
+default['eye']['bin'] = "#{node['languages']['ruby']['bin_dir']}/eye"
 default['eye']['log_dir'] = '/var/log/eye'
 default['eye']['run_dir'] = '/var/run/eye'
 default['eye']['user'] = 'root'
 default['eye']['group'] = 'root'
-default['eye']['bin_link_dir'] = '/usr/local/bin'
 
 case platform
 when 'arch'
