@@ -1,9 +1,11 @@
 {
-  "sources": {
+  "dependencies": {
     "eye": {
+      "locked_version": "0.3.1",
       "path": "."
     },
     "eye_test": {
+      "locked_version": "0.0.1",
       "path": "./test/cookbooks/eye_test"
     }
   }
