@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gem 'berkshelf', github: "berkshelf/berkshelf"
 gem 'foodcritic', '~> 3.0.3'
+gem 'stove', github: "sethvargo/stove"
 
 group :integration do
   gem 'test-kitchen', '>=1.0.0.beta.3'
