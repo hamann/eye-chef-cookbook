@@ -135,7 +135,7 @@ end
 def run_command(command)
   # if user isn't root, eye daemon places socket and pid in ~/.eye/sock 
   env_variables = { 'HOME' => node['etc']['passwd'][service_user]['dir'] }
-  shell_out!(command, :user => service_user, :env => env_variables)
+  shell_out!(command, :user => service_user, :group => service_group, :env => env_variables)
 end
 
 def determine_current_status!
