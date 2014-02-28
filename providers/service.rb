@@ -132,10 +132,12 @@ def restart_command
   "#{node['eye']['bin']} restart #{new_resource.service_name}"
 end
 
-def run_command(command)
+def run_command(command, opts = {})
   # if user isn't root, eye daemon places socket and pid in ~/.eye/sock 
   env_variables = { 'HOME' => node['etc']['passwd'][service_user]['dir'] }
-  shell_out!(command, :user => service_user, :group => service_group, :env => env_variables)
+  cmd = shell_out(command, :user => service_user, :group => service_group, :env => env_variables)
+  cmd.error! unless opts[:dont_raise]
+  cmd
 end
 
 def determine_current_status!
@@ -148,8 +150,7 @@ def service_running?
     # get sure eye master process is running
     run_command(load_eye)
 
-    # should find a better way to check if a process is up and running
-    if run_command(status_command).stdout.strip.empty?
+    if run_command(status_command, { :dont_raise => true }).exitstatus > 0
       @current_resource.running false
     else
       @current_resource.running true
