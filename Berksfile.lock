@@ -1,12 +1,11 @@
-{
-  "dependencies": {
-    "eye": {
-      "locked_version": "0.3.1",
-      "path": "."
-    },
-    "eye_test": {
-      "locked_version": "0.0.1",
-      "path": "./test/cookbooks/eye_test"
-    }
-  }
-}
+DEPENDENCIES
+  eye
+    path: .
+    metadata: true
+  eye_test
+    path: ./test/cookbooks/eye_test
+
+GRAPH
+  eye (0.4.0)
+  eye_test (0.0.1)
+    eye (>= 0.0.0)
