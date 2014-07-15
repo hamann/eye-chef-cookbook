@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-default['eye']['version'] = '0.5.2'
+default['eye']['version'] = '0.6.1'
 default['eye']['conf_dir'] = '/etc/eye'
 default['eye']['bin'] = "#{node['languages']['ruby']['bin_dir']}/eye"
 default['eye']['log_dir'] = '/var/log/eye'
