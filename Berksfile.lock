@@ -6,6 +6,8 @@ DEPENDENCIES
     path: test/cookbooks/eye_test
 
 GRAPH
+  build-essential (2.0.4)
   eye (0.5.0)
-  eye_test (0.0.1)
+  eye_test (0.0.2)
+    build-essential (>= 0.0.0)
     eye (>= 0.0.0)

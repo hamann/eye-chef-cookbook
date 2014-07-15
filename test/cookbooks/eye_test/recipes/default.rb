@@ -6,6 +6,9 @@
 #
 # All rights reserved - Do Not Redistribute
 #
+
+include_recipe 'build-essential'
+
 gem_package "unicorn"
 
 include_recipe "eye::default"
