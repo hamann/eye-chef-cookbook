@@ -29,16 +29,18 @@ action :enable do
                       when 'implement_me' then node['platform_family']
                       else 'lsb'
                       end
+    cache_service_user = service_user
+    cache_service_group = service_group
     template "#{node['eye']['init_dir']}/#{new_resource.init_script_prefix}#{new_resource.service_name}" do
       source "eye_init.#{template_suffix}.erb"
       cookbook "eye"
-      owner service_user
-      group service_group
+      owner cache_service_user
+      group cache_service_group
       mode "0755"
       variables(
                 :service_name => new_resource.service_name,
                 :config_file => config_file,
-                :user => service_user
+                :user => cache_service_user
                 )
       only_if { ::File.exists?(config_file) }
     end
