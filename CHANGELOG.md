@@ -3,6 +3,11 @@ eye CHANGELOG
 
 This file is used to list changes made in each version of the eye cookbook.
 
+0.5.0
+-----
+- [hamann] - Update eye gem to 0.6.1
+- [ryansch] - Cache result of method calls for block scope
+
 0.4.0
 -----
 - Respect the service group when starting services
