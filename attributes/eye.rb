@@ -24,6 +24,8 @@ default['eye']['log_dir'] = '/var/log/eye'
 default['eye']['run_dir'] = '/var/run/eye'
 default['eye']['user'] = 'root'
 default['eye']['group'] = 'root'
+default['eye']['http']['install'] = false
+default['eye']['http']['version'] = '0.6'
 
 case platform
 when 'arch'

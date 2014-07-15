@@ -7,11 +7,23 @@
 # All rights reserved - Do Not Redistribute
 #
 
+include_recipe 'apt'
 include_recipe 'build-essential'
 
 gem_package "unicorn"
 
+node.default['eye']['http']['install'] = true
 include_recipe "eye::default"
+
+directory "#{node['eye']['conf_dir']}/vagrant" do
+  user 'vagrant'
+end
+
+template "#{node['eye']['conf_dir']}/vagrant/http_config.rb" do
+  source "http_config.erb"
+  user 'vagrant'
+  group 'vagrant'
+end
 
 eye_app "sleep_vagrant" do
   start_command "/bin/sleep 10000"

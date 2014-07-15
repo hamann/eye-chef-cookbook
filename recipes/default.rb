@@ -30,3 +30,5 @@ end
     mode 0755
   end
 end
+
+include_recipe 'eye::http' if node['eye']['http']['install']
