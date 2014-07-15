@@ -10,13 +10,15 @@ eye is written in Ruby, so it should work on any system. If you want to use eye'
 
 Attributes
 ----------
-* `node['eye']['version']` - Version of eye, default is '0.4.2'
+* `node['eye']['version']` - Version of eye, default is '0.6.1'
 * `node['eye']['conf_dir']` - Location of eye's configuration files, default '/etc/eye'
 * `node['eye']['bin']` - Location of eye binary, default "node['languages']['ruby']['bin_dir']/eye"
 * `node['eye']['log_dir']` - Location of eye's logfiles, default '/var/log/eye'
 * `node['eye']['run_dir']` - Path of state directory, default '/var/run/eye'
 * `node['eye']['user']` - Owner of eye process, directories and configuration files, default 'root'
 * `node['eye']['group']` - Group of eye process, directories and configuration files, default 'root'
+* `node['eye']['http']['install']` - if set to true, `eye-http` gem will be installed, default 'false'
+* `node['eye']['http']['version']` - Version of eye-http, default is '0.6'
 
 Resources/Providers
 -------------------

@@ -3,6 +3,11 @@ eye CHANGELOG
 
 This file is used to list changes made in each version of the eye cookbook.
 
+0.6.0
+-----
+- [hamann] recipe to install eye-http
+- [hamann] `eye_app`: loading all configuration files ending with _config.rb
+
 0.5.0
 -----
 - [hamann] - Update eye gem to 0.6.1
