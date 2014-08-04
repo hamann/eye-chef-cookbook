@@ -136,7 +136,8 @@ end
 
 def run_command(command, opts = {})
   # if user isn't root, eye daemon places socket and pid in ~/.eye/sock 
-  env_variables = { 'HOME' => node['etc']['passwd'][service_user]['dir'] }
+  home = lambda { node['etc']['passwd'][service_user]['dir'] }
+  env_variables = { 'HOME' => home }
   cmd = shell_out(command, :user => service_user, :group => service_group, :env => env_variables)
   cmd.error! unless opts[:dont_raise]
   cmd
