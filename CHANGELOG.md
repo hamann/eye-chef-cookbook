@@ -3,6 +3,11 @@ eye CHANGELOG
 
 This file is used to list changes made in each version of the eye cookbook.
 
+0.6.2
+-----
+- [hamann] lazy load attribute for user home to prevent error if user doesn't exist at compile time
+- [hamann] update eye(-http) gem to 0.6.2
+
 0.6.0
 -----
 - [hamann] recipe to install eye-http
