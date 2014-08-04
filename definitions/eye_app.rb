@@ -1,4 +1,4 @@
-define :eye_app do
+define :eye_app, :enable => true, :load => false, :reload => false, :restart => false do
   include_recipe "eye::default"
   
   service_user = params[:user_srv_uid] || node['eye']['user']
@@ -46,9 +46,17 @@ define :eye_app do
     cookbook params[:cookbook] || "eye"
     variables params[:variables] || params
     source params[:template] || "eye_conf.eye.erb"
-    notifies :enable, resources(:eye_service => params[:name]), :immediately
-    notifies :reload, resources(:eye_service => params[:name]), :immediately
-    notifies :restart, resources(:eye_service => params[:name]), :immediately
+    if params[:enable]
+      notifies :enable, resources(:eye_service => params[:name]), :immediately
+    end
+    if params[:load]
+      notifies :load, resources(:eye_service => params[:name]), :immediately
+    end
+    if params[:reload]
+      notifies :reload, resources(:eye_service => params[:name]), :immediately
+    end
+    if params[:restart]
+      notifies :restart, resources(:eye_service => params[:name]), :immediately
+    end
   end
-  
 end

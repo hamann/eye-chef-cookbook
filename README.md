@@ -55,16 +55,20 @@ There's also a definition `eye_app` which creates the necessary configuration fi
 
 Example for unicorn:
 	
-	eye_app "test_unicorn" do
-  		user_srv true
-  		user_srv_uid "deploy"
-  		user_srv_gid "deploy"
-  		template "rails_unicorn.conf.erb"
-  		cookbook "rails_app"
-  		variables :ruby => "#{node['languages']['ruby']['bin_dir']}/ruby",
-    	          :environment => 'test',
-    	          :working_dir => '/var/www/rails_dir'
-	end
+  eye_app "test_unicorn" do
+    user_srv true
+    user_srv_uid "deploy"
+    user_srv_gid "deploy"
+    enable true 
+    load true
+    reload false
+    restart false
+    template "rails_unicorn.conf.erb"
+    cookbook "rails_app"
+    variables :ruby => "#{node['languages']['ruby']['bin_dir']}/ruby",
+              :environment => 'test',
+              :working_dir => '/var/www/rails_dir'
+  end
 	
 with according template:
 

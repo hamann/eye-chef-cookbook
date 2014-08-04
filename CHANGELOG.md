@@ -3,6 +3,10 @@ eye CHANGELOG
 
 This file is used to list changes made in each version of the eye cookbook.
 
+0.7.0
+-----
+- [hamann] additional parameters for eye_app definition to control service on configuration changes (default: `enable`). Changes previous default behaviour of enabling, reloading and restarting
+
 0.6.2
 -----
 - [hamann] lazy load attribute for user home to prevent error if user doesn't exist at compile time
