@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-default['eye']['version'] = '0.6.1'
+default['eye']['version'] = '0.6.2'
 default['eye']['conf_dir'] = '/etc/eye'
 default['eye']['bin'] = "#{node['languages']['ruby']['bin_dir']}/eye"
 default['eye']['log_dir'] = '/var/log/eye'
@@ -25,7 +25,7 @@ default['eye']['run_dir'] = '/var/run/eye'
 default['eye']['user'] = 'root'
 default['eye']['group'] = 'root'
 default['eye']['http']['install'] = false
-default['eye']['http']['version'] = '0.6'
+default['eye']['http']['version'] = '0.6.2'
 
 case platform
 when 'arch'
