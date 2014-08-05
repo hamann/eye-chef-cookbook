@@ -55,7 +55,8 @@ If eye daemon should by controlled by `node['eye']['user']`, but the process sho
 There's also a definition `eye_app` which creates the necessary configuration files, log directories and calls `eye_service` afterwards.
 
 Example for unicorn:
-	
+
+```	
   eye_app "test_unicorn" do
     user_srv true
     user_srv_uid "deploy"
@@ -70,6 +71,7 @@ Example for unicorn:
               :environment => 'test',
               :working_dir => '/var/www/rails_dir'
   end
+```
 	
 with according template:
 
