@@ -9,7 +9,7 @@ define :eye_app, :enable => true, :reload => false, :restart => false do
     user_srv params[:user_srv]
     user_srv_uid service_user
     user_srv_gid service_group
-    user_srv_home params[:home_dir]
+    user_srv_home params[:user_srv_home]
     init_script_prefix params[:init_script_prefix] || ''
     action :nothing
   end
