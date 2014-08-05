@@ -135,8 +135,7 @@ def restart_command
 end
 
 def run_command(command, opts = {})
-  # if user isn't root, eye daemon places socket and pid in ~/.eye/sock 
-  home = lambda { node['etc']['passwd'][service_user]['dir'] }
+  home = user_home(service_user)
   env_variables = { 'HOME' => home }
   cmd = shell_out(command, :user => service_user, :group => service_group, :env => env_variables)
   cmd.error! unless opts[:dont_raise]
@@ -171,6 +170,15 @@ def service_enabled?
   else
     @current_resource.enabled false
   end
+end
+
+def user_home(user)
+  home = if new_resource.user_srv_home.nil?
+           node['etc']['passwd'][user]['dir']
+         else
+           home = new_resource.user_srv_home
+         end
+  home
 end
 
 def service_user

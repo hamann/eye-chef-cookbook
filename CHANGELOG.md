@@ -3,6 +3,10 @@ eye CHANGELOG
 
 This file is used to list changes made in each version of the eye cookbook.
 
+0.7.1
+-----
+- [hamann] lazy loading attribute doesn't work as expected, replacing it by new user_srv_home option
+
 0.7.0
 -----
 - [hamann] additional parameters for eye_app definition to control service on configuration changes (default: `enable`). Changes previous default behaviour of enabling, reloading and restarting

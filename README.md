@@ -32,12 +32,13 @@ This loads eye daemon with a needed configuration 'my_service.eye' in a subdirec
 
 An (additional) eye daemon can also be started by a different owner (with it's own logfile, e.g in '/var/log/eye/deploy/eye.log')
 
-	eye_service 'my_service' do
-		user_srv true
-		user_srv_uid 'deploy'
-		user_srv_gid 'deploy'
- 		action [:enable, :reload, :restart]
-	end
+  eye_service 'my_service' do
+    user_srv true
+    user_srv_uid 'deploy'
+    user_srv_gid 'deploy'
+    user_srv_home '/home/deploy'
+    action [:enable, :reload, :restart]
+  end
 
 In that case the configuration file should be in '/etc/eye/deploy/my_service.eye'
 
@@ -59,8 +60,8 @@ Example for unicorn:
     user_srv true
     user_srv_uid "deploy"
     user_srv_gid "deploy"
+    user_srv_home '/home/deploy'
     enable true 
-    load true
     reload false
     restart false
     template "rails_unicorn.conf.erb"

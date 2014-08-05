@@ -22,4 +22,5 @@ suites:
 - name: default
   run_list:
   - recipe[eye_test]
+  - recipe[eye_test::new_user]
 

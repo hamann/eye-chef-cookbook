@@ -1,4 +1,4 @@
-define :eye_app, :enable => true, :load => false, :reload => false, :restart => false do
+define :eye_app, :enable => true, :reload => false, :restart => false do
   include_recipe "eye::default"
   
   service_user = params[:user_srv_uid] || node['eye']['user']
@@ -9,6 +9,7 @@ define :eye_app, :enable => true, :load => false, :reload => false, :restart => 
     user_srv params[:user_srv]
     user_srv_uid service_user
     user_srv_gid service_group
+    user_srv_home params[:home_dir]
     init_script_prefix params[:init_script_prefix] || ''
     action :nothing
   end
@@ -48,9 +49,6 @@ define :eye_app, :enable => true, :load => false, :reload => false, :restart => 
     source params[:template] || "eye_conf.eye.erb"
     if params[:enable]
       notifies :enable, resources(:eye_service => params[:name]), :immediately
-    end
-    if params[:load]
-      notifies :load, resources(:eye_service => params[:name]), :immediately
     end
     if params[:reload]
       notifies :reload, resources(:eye_service => params[:name]), :immediately
