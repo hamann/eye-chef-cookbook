@@ -33,7 +33,8 @@ define :eye_app, :enable => true, :reload => false, :restart => false do
     owner service_user
     group node['eye']['group']
     source "config.rb.erb"
-    variables :log_file => "#{log_dir}/eye.log"
+    variables :log_file => "#{log_dir}/eye.log",
+      :logger_level => node["eye"]["logger_level"] || 'Logger::INFO'
     cookbook 'eye'
     action :create
     mode 0640

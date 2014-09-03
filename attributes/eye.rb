@@ -21,6 +21,7 @@ default['eye']['version'] = '0.6.2'
 default['eye']['conf_dir'] = '/etc/eye'
 default['eye']['bin'] = "#{node['languages']['ruby']['bin_dir']}/eye"
 default['eye']['log_dir'] = '/var/log/eye'
+default['eye']['logger_level'] = 'Logger::INFO'
 default['eye']['run_dir'] = '/var/run/eye'
 default['eye']['user'] = 'root'
 default['eye']['group'] = 'root'

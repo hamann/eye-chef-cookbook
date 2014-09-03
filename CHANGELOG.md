@@ -3,6 +3,10 @@ eye CHANGELOG
 
 This file is used to list changes made in each version of the eye cookbook.
 
+0.7.3
+-----
+- [hamann] attribute for setting log level
+
 0.7.1
 -----
 - [hamann] lazy loading attribute doesn't work as expected, replacing it by new user_srv_home option

@@ -1,5 +1,6 @@
 Eye.config do
   logger '<%= @log_file %>'
+  logger_level <%= @logger_level %>
 end
 
 config_files = Dir[File.expand_path(File.join(File.dirname(File.absolute_path(__FILE__)), ".")) + "/**/*_config.rb"]
